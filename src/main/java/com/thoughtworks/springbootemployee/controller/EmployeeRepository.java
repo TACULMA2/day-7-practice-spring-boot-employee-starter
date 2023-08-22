@@ -1,7 +1,6 @@
 package com.thoughtworks.springbootemployee.controller;
 
 import org.springframework.stereotype.Repository;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -60,5 +59,14 @@ public class EmployeeRepository {
                 .skip((pageNumber-1) * pageSize)
                 .limit(pageSize)
                 .collect(Collectors.toList());
+    }
+
+    public void updateEmployee(Long id, Employee updatedEmployee) {
+        Employee employeeToUpdate = employees.stream()
+                .filter(employee -> employee.getId().equals(id))
+                .findFirst()
+                .orElseThrow(EmployeeNotFoundException::new);
+        employeeToUpdate.setAge(updatedEmployee.getAge());
+        employeeToUpdate.setSalary(updatedEmployee.getSalary());
     }
 }

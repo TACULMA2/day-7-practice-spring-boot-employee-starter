@@ -21,12 +21,12 @@ public class EmployeeController {
         return employeeRepository.listAll();
     }
 
-    @GetMapping (path = "/{id}")
-    public Employee findById (@PathVariable Long id) {
+    @GetMapping(path = "/{id}")
+    public Employee findById(@PathVariable Long id) {
         return employeeRepository.findById(id);
     }
 
-    @GetMapping (params = {"gender"})
+    @GetMapping(params = {"gender"})
     public List<Employee> findByGender(@RequestParam String gender) {
         return employeeRepository.findByGender(gender);
     }
@@ -40,5 +40,11 @@ public class EmployeeController {
     @GetMapping(params = {"pageNumber", "pageSize"})
     public List<Employee> findByPage(@RequestParam Long pageNumber, Long pageSize) {
         return employeeRepository.listByPage(pageNumber, pageSize);
+    }
+
+    @PutMapping(path = "/{id}")
+    public String updateEmployee(@PathVariable Long id, @RequestBody Employee updatedEmployee) {
+        employeeRepository.updateEmployee(id, updatedEmployee);
+        return "Employee updated successfully.";
     }
 }
