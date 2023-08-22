@@ -1,5 +1,7 @@
 package com.thoughtworks.springbootemployee.controller;
 
+import com.thoughtworks.springbootemployee.entity.Company;
+import com.thoughtworks.springbootemployee.repository.CompanyRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -42,8 +44,9 @@ public class CompanyController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public Company addCompany(@RequestBody Company company) {
-        return companyRepository.addCompany(company);
+    public String addCompany(@RequestBody Company company) {
+        companyRepository.addCompany(company);
+        return "Company added successfully.";
     }
 
     @DeleteMapping("/{companyId}")
