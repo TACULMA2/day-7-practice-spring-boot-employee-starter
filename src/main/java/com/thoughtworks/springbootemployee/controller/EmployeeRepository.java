@@ -9,6 +9,8 @@ import java.util.stream.Collectors;
 @Repository
 public class EmployeeRepository {
     private static final List<Employee> employees = new ArrayList<>();
+    public static final long START_ID_MINUS_ONE = 0L;
+    public static final int ID_INCREMENT = 1;
 
     static {
         employees.add(new Employee(1L, "Monkey D. Luffy", 19, "Male", 300000));
@@ -37,5 +39,19 @@ public class EmployeeRepository {
         return employees.stream()
                 .filter(employee -> employee.getGender().equals(gender))
                 .collect(Collectors.toList());
+    }
+
+    public Employee addEmployee(Employee employee) {
+        Long id = generateNextId();
+        Employee toBeSavedEmployee = new Employee(id, employee.getName(), employee.getAge(), employee.getGender(), employee.getSalary());
+        employees.add(toBeSavedEmployee);
+        return toBeSavedEmployee;
+    }
+
+    private Long generateNextId() {
+        return employees.stream()
+                .mapToLong(Employee::getId)
+                .max()
+                .orElse(START_ID_MINUS_ONE) + ID_INCREMENT;
     }
 }
