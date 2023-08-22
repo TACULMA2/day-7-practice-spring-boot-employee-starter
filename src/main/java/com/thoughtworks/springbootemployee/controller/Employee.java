@@ -45,7 +45,26 @@ public class Employee {
     private String name;
     private Integer age;
     private String gender;
+
+    public Employee(Long id, String name, int age, String gender, int salary, Long companyId) {
+        this.id = id;
+        this.name = name;
+        this.age = age;
+        this.gender = gender;
+        this.salary = salary;
+        this.companyId = companyId;
+    }
+
+    public Long getCompanyId() {
+        return companyId;
+    }
+
+    public void setCompanyId(Long companyId) {
+        this.companyId = companyId;
+    }
+
     private Integer salary;
+    private Long companyId;
 
     public Employee(Long id, String name, Integer age, String gender, Integer salary) {
         this.id = id;

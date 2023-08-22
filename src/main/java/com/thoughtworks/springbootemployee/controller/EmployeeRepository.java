@@ -21,6 +21,8 @@ public class EmployeeRepository {
         employees.add(new Employee(7L, "Nico Robin", 30, "Female", 93000));
         employees.add(new Employee(8L, "Franky", 36, "Male", 39400));
         employees.add(new Employee(9L, "Brook", 90, "Male", 38300));
+        employees.add(new Employee(10L, "Trafalgar Law", 26, "Male", 300000));
+        employees.add(new Employee(10L, "Eustass Kid", 23, "Male", 300000));
     }
 
     public List<Employee> listAll() {
