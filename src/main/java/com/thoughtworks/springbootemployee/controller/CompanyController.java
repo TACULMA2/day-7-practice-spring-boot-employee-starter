@@ -1,5 +1,6 @@
 package com.thoughtworks.springbootemployee.controller;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -37,5 +38,11 @@ public class CompanyController {
     @GetMapping(params = {"pageNumber", "pageSize"})
     public List<Company> findCompanyByPage(@RequestParam Long pageNumber, Long pageSize) {
         return companyRepository.listByCompanyPage(pageNumber, pageSize);
+    }
+
+    @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
+    public Company addCompany(@RequestBody Company company) {
+        return companyRepository.addCompany(company);
     }
 }

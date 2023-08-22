@@ -13,6 +13,8 @@ import java.util.stream.Collectors;
 public class CompanyRepository {
     private static final List<Company> companies = new ArrayList<>();
     private static final List<Employee> employees = new ArrayList<>();
+    public static final long START_ID_MINUS_ONE = 0L;
+    public static final int ID_INCREMENT = 1;
 
     static {
         companies.add(new Company(1L, "Straw Hat"));
@@ -73,5 +75,19 @@ public class CompanyRepository {
                 .skip((pageNumber - 1) * pageSize)
                 .limit(pageSize)
                 .collect(Collectors.toList());
+    }
+
+    public Company addCompany(Company company) {
+        Long companyId = generateNextId();
+        Company newCompany = new Company(companyId, company.getCompanyName());
+        companies.add(newCompany);
+        return newCompany;
+    }
+
+    private Long generateNextId() {
+        return companies.stream()
+                .mapToLong(Company::getCompanyId)
+                .max()
+                .orElse(START_ID_MINUS_ONE) + ID_INCREMENT;
     }
 }
