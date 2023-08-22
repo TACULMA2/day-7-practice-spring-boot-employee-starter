@@ -1,9 +1,10 @@
 package com.thoughtworks.springbootemployee.controller;
 
-import org.springframework.stereotype.Repository;
 
+import org.springframework.stereotype.Repository;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Repository
 public class CompanyRepository {
@@ -24,5 +25,11 @@ public class CompanyRepository {
                 .filter(employee -> employee.getCompanyId().equals(companyId))
                 .findFirst()
                 .orElseThrow(EmployeeNotFoundException::new);
+    }
+
+    public List<Company> findByCompanyName(String companyName) {
+        return companies.stream()
+                .filter(employee -> employee.getCompanyName().equals(companyName))
+                .collect(Collectors.toList());
     }
 }
