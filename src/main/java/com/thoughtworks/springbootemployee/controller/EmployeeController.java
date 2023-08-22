@@ -36,4 +36,9 @@ public class EmployeeController {
     public Employee addEmployee(@RequestBody Employee employee) {
         return employeeRepository.addEmployee(employee);
     }
+
+    @GetMapping(params = {"pageNumber", "pageSize"})
+    public List<Employee> findByPage(@RequestParam Long pageNumber, Long pageSize) {
+        return employeeRepository.listByPage(pageNumber, pageSize);
+    }
 }
