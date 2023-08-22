@@ -90,4 +90,12 @@ public class CompanyRepository {
                 .max()
                 .orElse(START_ID_MINUS_ONE) + ID_INCREMENT;
     }
+
+    public void deleteCompany(Long companyId) {
+        Company companyToDelete = companies.stream()
+                .filter(company -> company.getCompanyId().equals(companyId))
+                .findFirst()
+                .orElseThrow(CompanyNotFoundException::new);
+        companies.remove(companyToDelete);
+    }
 }
