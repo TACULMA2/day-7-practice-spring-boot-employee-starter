@@ -29,12 +29,13 @@ public class CompanyController {
         return companyRepository.findByCompanyName(companyName);
     }
 
-    //    @GetMapping(path = "/{companyId}/employees")
-//    public List<Employee> listEmployeesByCompany(@PathVariable Long companyId) {
-//        return companyRepository.getEmployeesByCompanyId(companyId);
-//    }
     @GetMapping(path = "/{companyId}/employees")
     public List<Map<String, Object>> listEmployeesByCompany(@PathVariable Long companyId) {
         return companyRepository.getEmployeesByCompanyId(companyId);
+    }
+
+    @GetMapping(params = {"pageNumber", "pageSize"})
+    public List<Company> findCompanyByPage(@RequestParam Long pageNumber, Long pageSize) {
+        return companyRepository.listByCompanyPage(pageNumber, pageSize);
     }
 }

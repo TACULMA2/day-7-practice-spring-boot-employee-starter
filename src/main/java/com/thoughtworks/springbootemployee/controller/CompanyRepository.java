@@ -64,4 +64,11 @@ public class CompanyRepository {
                 })
                 .collect(Collectors.toList());
     }
+
+    public List<Company> listByCompanyPage(Long pageNumber, Long pageSize) {
+        return companies.stream()
+                .skip((pageNumber-1) * pageSize)
+                .limit(pageSize)
+                .collect(Collectors.toList());
+    }
 }
