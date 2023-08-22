@@ -2,6 +2,7 @@ package com.thoughtworks.springbootemployee.controller;
 
 
 import org.springframework.stereotype.Repository;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -12,6 +13,7 @@ import java.util.stream.Collectors;
 public class CompanyRepository {
     private static final List<Company> companies = new ArrayList<>();
     private static final List<Employee> employees = new ArrayList<>();
+
     static {
         companies.add(new Company(1L, "Straw Hat"));
         companies.add(new Company(2L, "Heart Pirates"));
@@ -32,7 +34,7 @@ public class CompanyRepository {
         employees.add(new Employee(10L, "Eustass Kid", 23, "Male", 300000, 3L));
     }
 
-    public List<Company> listAllCompanies(){
+    public List<Company> listAllCompanies() {
         return companies;
     }
 
@@ -54,7 +56,8 @@ public class CompanyRepository {
                 .filter(employee -> employee.getCompanyId().equals(companyId))
                 .collect(Collectors.toList());
         return employeesInCompany.stream()
-                .map(employee -> { Map<String, Object> employeeMap = new HashMap<>();
+                .map(employee -> {
+                    Map<String, Object> employeeMap = new HashMap<>();
                     employeeMap.put("id", employee.getId());
                     employeeMap.put("name", employee.getName());
                     employeeMap.put("age", employee.getAge());
@@ -67,7 +70,7 @@ public class CompanyRepository {
 
     public List<Company> listByCompanyPage(Long pageNumber, Long pageSize) {
         return companies.stream()
-                .skip((pageNumber-1) * pageSize)
+                .skip((pageNumber - 1) * pageSize)
                 .limit(pageSize)
                 .collect(Collectors.toList());
     }
