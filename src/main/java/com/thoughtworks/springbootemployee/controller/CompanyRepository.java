@@ -18,4 +18,11 @@ public class CompanyRepository {
     public List<Company> listAllCompanies(){
         return companies;
     }
+
+    public Company findById(Long companyId) {
+        return companies.stream()
+                .filter(employee -> employee.getCompanyId().equals(companyId))
+                .findFirst()
+                .orElseThrow(EmployeeNotFoundException::new);
+    }
 }
