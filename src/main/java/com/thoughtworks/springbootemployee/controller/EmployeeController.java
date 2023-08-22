@@ -47,4 +47,10 @@ public class EmployeeController {
         employeeRepository.updateEmployee(id, updatedEmployee);
         return "Employee updated successfully.";
     }
+
+    @DeleteMapping("/{id}")
+    public String deleteEmployee(@PathVariable Long id) {
+        employeeRepository.deleteEmployee(id);
+        return "Employee deleted successfully.";
+    }
 }

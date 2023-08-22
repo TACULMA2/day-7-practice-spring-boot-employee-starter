@@ -69,4 +69,12 @@ public class EmployeeRepository {
         employeeToUpdate.setAge(updatedEmployee.getAge());
         employeeToUpdate.setSalary(updatedEmployee.getSalary());
     }
+
+    public void deleteEmployee(Long id) {
+        Employee employeeToDelete = employees.stream()
+                .filter(employee -> employee.getId().equals(id))
+                .findFirst()
+                .orElseThrow(EmployeeNotFoundException::new);
+        employees.remove(employeeToDelete);
+    }
 }
