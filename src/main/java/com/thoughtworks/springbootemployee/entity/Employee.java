@@ -9,6 +9,15 @@ public class Employee {
     private String gender;
     private Integer salary;
     private Long companyId;
+    private boolean status;
+
+    public boolean isStatus() {
+        return status;
+    }
+
+    public void setStatus(boolean status) {
+        this.status = status;
+    }
 
     public Employee() {
         // Default constructor //Todo use json creator
@@ -40,6 +49,10 @@ public class Employee {
 
     public boolean hasInvalidAge() {
         return getAge() < MINIMUM_AGE || getAge() > MAXIMUM_AGE;
+    }
+
+    public boolean hasInactiveStatus() {
+        return true;
     }
 
     public Long getId() {
