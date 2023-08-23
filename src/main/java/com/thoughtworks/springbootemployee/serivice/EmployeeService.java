@@ -1,6 +1,7 @@
 package com.thoughtworks.springbootemployee.serivice;
 
 import com.thoughtworks.springbootemployee.entity.Employee;
+import com.thoughtworks.springbootemployee.exception.EmployeeActiveStatusException;
 import com.thoughtworks.springbootemployee.exception.EmployeeCreateException;
 import com.thoughtworks.springbootemployee.repository.EmployeeRepository;
 
@@ -22,6 +23,15 @@ public class EmployeeService {
         Employee matchedEmployee = employeeRepository.findById(id);
         matchedEmployee.setStatus(Boolean.FALSE);
         employeeRepository.updateEmployee(id, matchedEmployee);
+    }
+
+    public void update(Employee employee){
+        if (!employee.isStatus()) {
+            throw new EmployeeActiveStatusException();
+        }
+        Employee matchedEmployee = employeeRepository.findById(employee.getId());
+        matchedEmployee.merge(employee);
+        employeeRepository.updateEmployee(employee.getId(), matchedEmployee);
     }
 }
 

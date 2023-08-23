@@ -1,6 +1,7 @@
 package com.thoughtworks.springbootemployee.service;
 
 import com.thoughtworks.springbootemployee.entity.Employee;
+import com.thoughtworks.springbootemployee.exception.EmployeeActiveStatusException;
 import com.thoughtworks.springbootemployee.exception.EmployeeCreateException;
 import com.thoughtworks.springbootemployee.repository.EmployeeRepository;
 import com.thoughtworks.springbootemployee.serivice.EmployeeService;
@@ -77,5 +78,21 @@ public class EmployeeServiceTest {
             assertEquals(3000, tempEmployee.getSalary());
             return true;
         }));
+    }
+
+    @Test
+    void should_throw_exception_when_update_given_employee_status_inactive() {
+        // Given
+        Employee employee = new Employee(1L, "Lucy", 30 , "Female", 3000);
+        employee.setStatus(false);
+        when(mockedEmployeeRepository.findById(employee.getId())).thenReturn(employee);
+
+        // When and Then
+        EmployeeActiveStatusException employeeActiveStatusException = assertThrows(EmployeeActiveStatusException.class, () -> {
+            employeeService.update(employee);
+        });
+
+        // Then
+        assertEquals("Employee is inactive.", employeeActiveStatusException.getMessage());
     }
 }

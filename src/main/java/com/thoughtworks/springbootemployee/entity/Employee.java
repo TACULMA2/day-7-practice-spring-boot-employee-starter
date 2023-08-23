@@ -51,10 +51,6 @@ public class Employee {
         return getAge() < MINIMUM_AGE || getAge() > MAXIMUM_AGE;
     }
 
-    public boolean hasInactiveStatus() {
-        return true;
-    }
-
     public Long getId() {
         return id;
     }
