@@ -1,6 +1,6 @@
 package com.thoughtworks.springbootemployee.repository;
 
-import com.thoughtworks.springbootemployee.entity.Employee;
+import com.thoughtworks.springbootemployee.model.Employee;
 import com.thoughtworks.springbootemployee.exception.EmployeeNotFoundException;
 import org.springframework.stereotype.Repository;
 

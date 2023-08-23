@@ -1,6 +1,6 @@
 package com.thoughtworks.springbootemployee.serivice;
 
-import com.thoughtworks.springbootemployee.entity.Employee;
+import com.thoughtworks.springbootemployee.model.Employee;
 import com.thoughtworks.springbootemployee.exception.EmployeeActiveStatusException;
 import com.thoughtworks.springbootemployee.exception.EmployeeCreateException;
 import com.thoughtworks.springbootemployee.repository.EmployeeRepository;

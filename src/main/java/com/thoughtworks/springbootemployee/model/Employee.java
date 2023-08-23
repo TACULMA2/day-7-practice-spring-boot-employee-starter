@@ -1,4 +1,4 @@
-package com.thoughtworks.springbootemployee.entity;
+package com.thoughtworks.springbootemployee.model;
 
 public class Employee {
     public static final int MINIMUM_AGE = 18;
