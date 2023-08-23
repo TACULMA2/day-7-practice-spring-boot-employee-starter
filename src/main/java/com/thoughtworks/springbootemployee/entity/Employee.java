@@ -8,6 +8,18 @@ public class Employee {
     private Integer salary;
     private Long companyId;
 
+    public Employee(Long id, String name, Integer age, String gender, Integer salary) {
+        this.id = id;
+        this.name = name;
+        this.age = age;
+        this.gender = gender;
+        this.salary = salary;
+    }
+
+    public Employee() {
+        // Default constructor
+    }
+
     public Long getId() {
         return id;
     }
@@ -63,13 +75,5 @@ public class Employee {
         this.gender = gender;
         this.salary = salary;
         this.companyId = companyId;
-    }
-
-    public Employee(Long id, String name, Integer age, String gender, Integer salary) {
-        this.id = id;
-        this.name = name;
-        this.age = age;
-        this.gender = gender;
-        this.salary = salary;
     }
 }

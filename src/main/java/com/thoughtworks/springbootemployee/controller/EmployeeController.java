@@ -35,8 +35,9 @@ public class EmployeeController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public Employee addEmployee(@RequestBody Employee employee) {
-        return employeeRepository.addEmployee(employee);
+    public String addEmployee(@RequestBody Employee employee) {
+        employeeRepository.addEmployee(employee);
+        return "Employee Successfully Added.";
     }
 
     @GetMapping(params = {"pageNumber", "pageSize"})
