@@ -2,6 +2,7 @@ package com.thoughtworks.springbootemployee.controller;
 
 import com.thoughtworks.springbootemployee.model.Company;
 import com.thoughtworks.springbootemployee.repository.CompanyRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -12,7 +13,7 @@ import java.util.Map;
 @RestController
 public class CompanyController {
     private final CompanyRepository companyRepository;
-
+    @Autowired
     public CompanyController(CompanyRepository companyRepository) {
         this.companyRepository = companyRepository;
     }
@@ -44,21 +45,18 @@ public class CompanyController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public String addCompany(@RequestBody Company company) {
-        companyRepository.addCompany(company);
-        return "Company added successfully.";
+    public Company addCompany(@RequestBody Company company) {
+        return companyRepository.addCompany(company);
     }
 
     @PutMapping(path = "/{id}")
-    public String updateCompany(@PathVariable Long companyId, @RequestBody Company updatedCompany) {
-        companyRepository.updateCompany(companyId, updatedCompany);
-        return "Employee updated successfully.";
+    public Company updateCompany(@PathVariable Long companyId, @RequestBody Company updatedCompany) {
+        return companyRepository.updateCompany(companyId, updatedCompany);
     }
 
     @DeleteMapping("/{companyId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public String deleteCompany(@PathVariable Long companyId) {
-        companyRepository.deleteCompany(companyId);
-        return "Company deleted successfully.";
+    public Company deleteCompany(@PathVariable Long companyId) {
+        return companyRepository.deleteCompany(companyId);
     }
 }

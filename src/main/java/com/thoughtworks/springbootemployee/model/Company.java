@@ -20,12 +20,18 @@ public class Company {
         this.companyName = companyName;
     }
 
+    public Company(){
+    }
+
+    public Company(String companyName){
+        this.companyName = companyName;
+    }
     public Company(Long companyId, String companyName) {
         this.companyId = companyId;
         this.companyName = companyName;
     }
 
-    public void Company(Company company) {
+    public void updateFromCompany(Company company) {
         this.companyId = company.companyId;
         this.companyName = company.companyName;
     }

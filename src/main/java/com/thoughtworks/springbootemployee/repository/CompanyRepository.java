@@ -81,12 +81,17 @@ public class CompanyRepository {
 
     public Company updateCompany(Long companyId, Company company) {
         Company companyToUpdate = findByCompanyId(companyId);
-        companyToUpdate.Company(company);
+        companyToUpdate.updateFromCompany(company);
         return companyToUpdate;
     }
 
-    public void deleteCompany(Long companyId) {
+    public Company deleteCompany(Long companyId) {
         Company companyToDelete = findByCompanyId(companyId);
         companies.remove(companyToDelete);
+        return companyToDelete;
+    }
+
+    public void cleanAll() {
+        companies.clear();
     }
 }
