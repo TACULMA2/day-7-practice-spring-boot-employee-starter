@@ -90,4 +90,6 @@ public class CompanyApiTests {
                 .andExpect(jsonPath("$.companyId").value(notNullValue()))
                 .andExpect(jsonPath("$.companyName").value(newCompany.getCompanyName()));
     }
+
+
 }
