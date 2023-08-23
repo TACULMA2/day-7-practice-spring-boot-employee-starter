@@ -1,9 +1,7 @@
 package com.thoughtworks.springbootemployee.repository;
 
-
 import com.thoughtworks.springbootemployee.entity.Company;
 import com.thoughtworks.springbootemployee.entity.Employee;
-import com.thoughtworks.springbootemployee.exception.CompanyNotFoundException;
 import com.thoughtworks.springbootemployee.exception.EmployeeNotFoundException;
 import org.springframework.stereotype.Repository;
 
@@ -30,7 +28,7 @@ public class CompanyRepository {
         return companies;
     }
 
-    public Company findById(Long companyId) {
+    public Company findByCompanyId(Long companyId) {
         return companies.stream()
                 .filter(employee -> employee.getCompanyId().equals(companyId))
                 .findFirst()
@@ -81,19 +79,14 @@ public class CompanyRepository {
                 .orElse(START_ID_MINUS_ONE) + ID_INCREMENT;
     }
 
-    public void updateCompany(Long companyId, Company updatedCompany) {
-        Company companyToUpadate = companies.stream()
-                .filter(company -> company.getCompanyId().equals(companyId))
-                .findFirst()
-                .orElseThrow(EmployeeNotFoundException::new);
-        companyToUpadate.setCompanyName(companyToUpadate.getCompanyName());
+    public Company updateCompany(Long companyId, Company company) {
+        Company companyToUpdate = findByCompanyId(companyId);
+        companyToUpdate.Company(company);
+        return companyToUpdate;
     }
 
     public void deleteCompany(Long companyId) {
-        Company companyToDelete = companies.stream()
-                .filter(company -> company.getCompanyId().equals(companyId))
-                .findFirst()
-                .orElseThrow(CompanyNotFoundException::new);
+        Company companyToDelete = findByCompanyId(companyId);
         companies.remove(companyToDelete);
     }
 }

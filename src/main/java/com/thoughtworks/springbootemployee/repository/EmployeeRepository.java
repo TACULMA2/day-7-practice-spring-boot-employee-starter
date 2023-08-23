@@ -78,10 +78,7 @@ public class EmployeeRepository {
     }
 
     public void deleteEmployee(Long id) {
-        Employee employeeToDelete = employees.stream()
-                .filter(employee -> employee.getId().equals(id))
-                .findFirst()
-                .orElseThrow(EmployeeNotFoundException::new);
+        Employee employeeToDelete = findById(id);
         employees.remove(employeeToDelete);
     }
 

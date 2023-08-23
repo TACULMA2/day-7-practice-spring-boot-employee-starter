@@ -24,4 +24,9 @@ public class Company {
         this.companyId = companyId;
         this.companyName = companyName;
     }
+
+    public void Company(Company company) {
+        this.companyId = company.companyId;
+        this.companyName = company.companyName;
+    }
 }

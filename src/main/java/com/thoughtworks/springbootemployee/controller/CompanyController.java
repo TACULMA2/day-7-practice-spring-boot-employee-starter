@@ -1,7 +1,6 @@
 package com.thoughtworks.springbootemployee.controller;
 
 import com.thoughtworks.springbootemployee.entity.Company;
-import com.thoughtworks.springbootemployee.entity.Employee;
 import com.thoughtworks.springbootemployee.repository.CompanyRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -25,7 +24,7 @@ public class CompanyController {
 
     @GetMapping(path = "/{companyId}")
     public Company findByCompanyId(@PathVariable Long companyId) {
-        return companyRepository.findById(companyId);
+        return companyRepository.findByCompanyId(companyId);
     }
 
     @GetMapping(params = {"companyName"})
