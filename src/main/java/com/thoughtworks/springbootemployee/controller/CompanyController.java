@@ -49,7 +49,7 @@ public class CompanyController {
         return companyRepository.addCompany(company);
     }
 
-    @PutMapping(path = "/{id}")
+    @PutMapping(path = "/{companyId}")
     public Company updateCompany(@PathVariable Long companyId, @RequestBody Company updatedCompany) {
         return companyRepository.updateCompany(companyId, updatedCompany);
     }

@@ -91,5 +91,18 @@ public class CompanyApiTests {
                 .andExpect(jsonPath("$.companyName").value(newCompany.getCompanyName()));
     }
 
+    @Test
+    void should_return_updated_company_when_perform_put_companies_given_a_company_id() throws Exception {
+        //given
+        Company newCompany = companyRepository.addCompany(new Company("COSCO"));
+        Company updatedCompany = new Company("OOCl");
+        //when
+        mOckMvcClient.perform(MockMvcRequestBuilders.put("/companies/"+ newCompany.getCompanyId())
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(new ObjectMapper().writeValueAsString(updatedCompany)))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.companyId").value(newCompany.getCompanyId()))
+                .andExpect(jsonPath("$.companyName").value(updatedCompany.getCompanyName()));
+    }
 
 }

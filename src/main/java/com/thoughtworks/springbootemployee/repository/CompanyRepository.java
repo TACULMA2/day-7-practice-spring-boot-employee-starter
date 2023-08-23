@@ -81,7 +81,7 @@ public class CompanyRepository {
 
     public Company updateCompany(Long companyId, Company company) {
         Company companyToUpdate = findByCompanyId(companyId);
-        companyToUpdate.updateFromCompany(company);
+        companyToUpdate.setCompanyName(company.getCompanyName());
         return companyToUpdate;
     }
 
