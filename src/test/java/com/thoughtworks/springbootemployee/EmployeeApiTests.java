@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.thoughtworks.springbootemployee.entity.Employee;
 import com.thoughtworks.springbootemployee.repository.EmployeeRepository;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.internal.matchers.NotNull;
@@ -13,6 +14,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
 
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.notNullValue;
@@ -134,5 +137,32 @@ public class EmployeeApiTests {
         mOckMvcClient.perform(MockMvcRequestBuilders.delete("/employees/"+ deleteEmployee.getId()))
                 .andExpect(status().isNoContent());
         //then
+        Assertions.assertTrue(employeeRepository.listAll().isEmpty());
+    }
+    
+    @Test
+    void should_return_list_of_employees_with_given_range_when_get_employees_given_pageNUmber_and_pageSize() throws Exception {
+    //given
+        Employee firstEmployee = employeeRepository.addEmployee(new Employee(1L, "Monkey D. Luffy", 19, "Male", 300000, 1L));
+        Employee secondEmployee = employeeRepository.addEmployee(new Employee(2L, "Ronoroa Zoro", 21, "Male", 111100, 1L));
+        Employee thirdEmployee = employeeRepository.addEmployee(new Employee(3L, "Nami", 20, "Female", 36600, 1L));
+        Long pageNumber = 1L;
+        Long pageSize = 2L;
+     //when
+        String queryString = String.format("/employees?pageNumber=%d&pageSize=%d", pageNumber, pageSize);
+        mOckMvcClient.perform(MockMvcRequestBuilders.get(queryString))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$", hasSize(2)))
+                .andExpect(jsonPath("$[0].id").value(firstEmployee.getId()))
+                .andExpect(jsonPath("$[0].name").value(firstEmployee.getName()))
+                .andExpect(jsonPath("$[0].age").value(firstEmployee.getAge()))
+                .andExpect(jsonPath("$[0].gender").value(firstEmployee.getGender()))
+                .andExpect(jsonPath("[0].salary").value(firstEmployee.getSalary()))
+                .andExpect(jsonPath("$[1].id").value(secondEmployee.getId()))
+                .andExpect(jsonPath("$[1].name").value(secondEmployee.getName()))
+                .andExpect(jsonPath("$[1].age").value(secondEmployee.getAge()))
+                .andExpect(jsonPath("$[1].gender").value(secondEmployee.getGender()))
+                .andExpect(jsonPath("$[1].salary").value(secondEmployee.getSalary()));
+     //then
     }
 }
