@@ -54,4 +54,5 @@ public class CompanyController {
         companyRepository.deleteCompany(companyId);
         return "Company deleted successfully.";
     }
+    //TODO missing a requirement updateCompany
 }
