@@ -81,6 +81,14 @@ public class CompanyRepository {
                 .orElse(START_ID_MINUS_ONE) + ID_INCREMENT;
     }
 
+    public void updateCompany(Long companyId, Company updatedCompany) {
+        Company companyToUpadate = companies.stream()
+                .filter(company -> company.getCompanyId().equals(companyId))
+                .findFirst()
+                .orElseThrow(EmployeeNotFoundException::new);
+        companyToUpadate.setCompanyName(companyToUpadate.getCompanyName());
+    }
+
     public void deleteCompany(Long companyId) {
         Company companyToDelete = companies.stream()
                 .filter(company -> company.getCompanyId().equals(companyId))

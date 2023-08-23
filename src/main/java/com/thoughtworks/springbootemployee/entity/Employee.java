@@ -8,6 +8,17 @@ public class Employee {
     private Integer salary;
     private Long companyId;
 
+    public Employee() {
+        // Default constructor //Todo use json creator
+    }
+
+    public Employee(String name, Integer age, String gender, Integer salary) {
+        this.name = name;
+        this.age = age;
+        this.gender = gender;
+        this.salary = salary;
+    }
+
     public Employee(Long id, String name, Integer age, String gender, Integer salary) {
         this.id = id;
         this.name = name;
@@ -16,8 +27,13 @@ public class Employee {
         this.salary = salary;
     }
 
-    public Employee() {
-        // Default constructor
+    public Employee(Long id, String name, int age, String gender, int salary, Long companyId) {
+        this.id = id;
+        this.name = name;
+        this.age = age;
+        this.gender = gender;
+        this.salary = salary;
+        this.companyId = companyId;
     }
 
     public Long getId() {
@@ -68,12 +84,8 @@ public class Employee {
         this.companyId = companyId;
     }
 
-    public Employee(Long id, String name, int age, String gender, int salary, Long companyId) {
-        this.id = id;
-        this.name = name;
-        this.age = age;
-        this.gender = gender;
-        this.salary = salary;
-        this.companyId = companyId;
+    public void merge(Employee employee) {
+        this.age = employee.age;
+        this.salary = employee.salary;
     }
 }

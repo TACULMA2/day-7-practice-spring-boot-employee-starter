@@ -25,7 +25,7 @@ public class EmployeeRepository {
         employees.add(new Employee(8L, "Franky", 36, "Male", 39400, 1L));
         employees.add(new Employee(9L, "Brook", 90, "Male", 38300, 1L));
         employees.add(new Employee(10L, "Trafalgar Law", 26, "Male", 300000, 2L));
-        employees.add(new Employee(10L, "Eustass Kid", 23, "Male", 300000, 3L));
+        employees.add(new Employee(11L, "Eustass Kid", 23, "Male", 300000, 3L));
     }
 
     public List<Employee> listAll() {
@@ -51,11 +51,11 @@ public class EmployeeRepository {
                 employee.getName(),
                 employee.getAge(),
                 employee.getGender(),
-                employee.getSalary());
-                employee.getCompanyId();
+                employee.getSalary(),
+                employee.getCompanyId());
         employees.add(toBeSavedEmployee);
         return toBeSavedEmployee;
-    }
+}
 
     private Long generateNextId() {
         return employees.stream()
@@ -71,13 +71,10 @@ public class EmployeeRepository {
                 .collect(Collectors.toList());
     }
 
-    public void updateEmployee(Long id, Employee updatedEmployee) {
-        Employee employeeToUpdate = employees.stream()
-                .filter(employee -> employee.getId().equals(id))
-                .findFirst()
-                .orElseThrow(EmployeeNotFoundException::new);
-        employeeToUpdate.setAge(updatedEmployee.getAge());
-        employeeToUpdate.setSalary(updatedEmployee.getSalary());
+    public Employee updateEmployee(Long id, Employee employee) {
+        Employee employeeToUpdate = findById(id);
+        employeeToUpdate.merge(employee);
+        return employeeToUpdate;
     }
 
     public void deleteEmployee(Long id) {
@@ -86,5 +83,9 @@ public class EmployeeRepository {
                 .findFirst()
                 .orElseThrow(EmployeeNotFoundException::new);
         employees.remove(employeeToDelete);
+    }
+
+    public void cleanALl() {
+        employees.clear();
     }
 }

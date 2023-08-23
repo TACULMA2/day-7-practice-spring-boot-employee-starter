@@ -1,6 +1,7 @@
 package com.thoughtworks.springbootemployee.controller;
 
 import com.thoughtworks.springbootemployee.entity.Company;
+import com.thoughtworks.springbootemployee.entity.Employee;
 import com.thoughtworks.springbootemployee.repository.CompanyRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -49,7 +50,14 @@ public class CompanyController {
         return "Company added successfully.";
     }
 
+    @PutMapping(path = "/{id}")
+    public String updateCompany(@PathVariable Long companyId, @RequestBody Company updatedCompany) {
+        companyRepository.updateCompany(companyId, updatedCompany);
+        return "Employee updated successfully.";
+    }
+
     @DeleteMapping("/{companyId}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     public String deleteCompany(@PathVariable Long companyId) {
         companyRepository.deleteCompany(companyId);
         return "Company deleted successfully.";
