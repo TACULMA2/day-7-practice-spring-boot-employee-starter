@@ -43,7 +43,7 @@ public class CompanyApiTests {
     @Test
     void should_return_the_company_when_perform_get_company_given_a_company_id() throws Exception {
         //given
-        Company oocl = companyRepository.addCompany(new Company(1l,"OOCL"));
+        Company oocl = companyRepository.addCompany(new Company(1l, "OOCL"));
         companyRepository.addCompany(new Company(2l, "COSCO"));
         //when
         mOckMvcClient.perform(MockMvcRequestBuilders.get("/companies/" + oocl.getCompanyId()))
@@ -60,5 +60,18 @@ public class CompanyApiTests {
         //when
         mOckMvcClient.perform(MockMvcRequestBuilders.get("/companies/" + notExistedCompanyId))
                 .andExpect(status().isNotFound());
+    }
+
+    @Test
+    void should_should_return_companies_by_given_name_when_perform_get_companies_given_a_name() throws Exception {
+        //given
+        Company oocl = companyRepository.addCompany(new Company(1l, "OOCL"));
+        Company cosco = companyRepository.addCompany(new Company(2l, "COSCO"));
+        //when
+        mOckMvcClient.perform(MockMvcRequestBuilders.get("/companies/").param("companyName", "OOCL"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$", hasSize(1)))
+                .andExpect(jsonPath("$[0].companyId").value(oocl.getCompanyId()))
+                .andExpect(jsonPath("$[0].companyName").value(oocl.getCompanyName()));
     }
 }
