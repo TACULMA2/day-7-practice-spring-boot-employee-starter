@@ -3,6 +3,7 @@ package com.thoughtworks.springbootemployee.repository;
 import com.thoughtworks.springbootemployee.entity.Employee;
 import com.thoughtworks.springbootemployee.exception.EmployeeNotFoundException;
 import org.springframework.stereotype.Repository;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -51,7 +52,7 @@ public class EmployeeRepository {
                 employee.getAge(),
                 employee.getGender(),
                 employee.getSalary());
-            employee.getCompanyId();
+                employee.getCompanyId();
         employees.add(toBeSavedEmployee);
         return toBeSavedEmployee;
     }
@@ -65,7 +66,7 @@ public class EmployeeRepository {
 
     public List<Employee> listByPage(Long pageNumber, Long pageSize) {
         return employees.stream()
-                .skip((pageNumber-1) * pageSize)
+                .skip((pageNumber - 1) * pageSize)
                 .limit(pageSize)
                 .collect(Collectors.toList());
     }
