@@ -68,12 +68,20 @@ public class EmployeeApiTests {
      //then
     }
 
-//    @Test
-//    void should__when__given_() {
-//    //given
-//
-//     //when
-//
-//     //then
-//    }
+    @Test
+    void should_should_return_employees_by_given_gender_when_perform_get_employees_given_a_gender() throws Exception {
+    //given
+        Employee alice = employeeRepository.addEmployee(new Employee("Alice", 24, "Female", 9000));
+        Employee bob = employeeRepository.addEmployee(new Employee("Bob", 28, "Male", 8000));
+     //when
+        mOckMvcClient.perform(MockMvcRequestBuilders.get("/employees/").param("gender", "Female"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$", hasSize(1)))
+                .andExpect(jsonPath("$[0].id").value(alice.getId()))
+                .andExpect(jsonPath("$[0].name").value(alice.getName()))
+                .andExpect(jsonPath("$[0].age").value(alice.getAge()))
+                .andExpect(jsonPath("$[0].gender").value(alice.getGender()))
+                .andExpect(jsonPath("[0].salary").value(alice.getSalary()));
+     //then
+    }
 }
