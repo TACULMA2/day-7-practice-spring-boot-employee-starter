@@ -35,9 +35,8 @@ public class EmployeeController {
     //TODO I think you can just add something like @responsestatus(value = https.created reason = "")
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public String addEmployee(@RequestBody Employee employee) {
-        employeeRepository.addEmployee(employee);
-        return "Employee Successfully Added.";
+    public Employee addEmployee(@RequestBody Employee employee) {
+        return employeeRepository.addEmployee(employee);
     }
 
     @GetMapping(params = {"pageNumber", "pageSize"})
@@ -46,15 +45,14 @@ public class EmployeeController {
     }
 
     @PutMapping(path = "/{id}")
-    public String updateEmployee(@PathVariable Long id, @RequestBody Employee updatedEmployee) {
-        employeeRepository.updateEmployee(id, updatedEmployee);
-        return "Employee updated successfully.";
+    public Employee updateEmployee(@PathVariable Long id, @RequestBody Employee updatedEmployee) {
+        return employeeRepository.updateEmployee(id, updatedEmployee);
+
     }
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public String deleteEmployee(@PathVariable Long id) {
-        employeeRepository.deleteEmployee(id);
-        return "Employee deleted successfully.";
+    public Employee deleteEmployee(@PathVariable Long id) {
+        return employeeRepository.deleteEmployee(id);
     }
 }
