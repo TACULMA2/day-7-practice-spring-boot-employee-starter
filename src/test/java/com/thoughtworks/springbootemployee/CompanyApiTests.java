@@ -51,8 +51,8 @@ public class CompanyApiTests {
     @Test
     void should_return_the_company_when_perform_get_company_given_a_company_id() throws Exception {
         //given
-        Company oocl = companyRepository.addCompany(new Company(1l, "OOCL"));
-        companyRepository.addCompany(new Company(2l, "COSCO"));
+        Company oocl = companyRepository.addCompany(new Company(1L, "OOCL"));
+        companyRepository.addCompany(new Company(2L, "COSCO"));
         //when
         mockMvcClient.perform(MockMvcRequestBuilders.get("/companies/" + oocl.getCompanyId()))
                 .andExpect(status().isOk())
@@ -72,8 +72,8 @@ public class CompanyApiTests {
     @Test
     void should_should_return_companies_by_given_name_when_perform_get_companies_given_a_name() throws Exception {
         //given
-        Company oocl = companyRepository.addCompany(new Company(1l, "OOCL"));
-        Company cosco = companyRepository.addCompany(new Company(2l, "COSCO"));
+        Company oocl = companyRepository.addCompany(new Company(1L, "OOCL"));
+        companyRepository.addCompany(new Company(2L, "COSCO"));
         //when
         mockMvcClient.perform(MockMvcRequestBuilders.get("/companies/").param("companyName", "OOCL"))
                 .andExpect(status().isOk())
@@ -123,11 +123,11 @@ public class CompanyApiTests {
     @Test
     void should_return_list_of_companies_with_given_range_when_get_companies_given_pageNumber_and_pageSize() throws Exception {
         //given
-        Company oocl = companyRepository.addCompany(new Company(1l, "OOCL"));
-        Company cosco = companyRepository.addCompany(new Company(2l, "COSCO"));
-        Company tw = companyRepository.addCompany(new Company(3l, "TW"));
-        Company scape = companyRepository.addCompany(new Company(4l, "SCAPE"));
-        Company dd = companyRepository.addCompany(new Company(5l, "DD"));
+        Company oocl = companyRepository.addCompany(new Company(1L, "OOCL"));
+        Company cosco = companyRepository.addCompany(new Company(2L, "COSCO"));
+        Company tw = companyRepository.addCompany(new Company(3L, "TW"));
+        Company scape = companyRepository.addCompany(new Company(4L, "SCAPE"));
+        companyRepository.addCompany(new Company(5L, "DD"));
         Long pageNumber = 1L;
         Long pageSize = 4L;
         //when

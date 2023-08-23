@@ -74,7 +74,7 @@ public class EmployeeApiTests {
     void should_should_return_employees_by_given_gender_when_perform_get_employees_given_a_gender() throws Exception {
         //given
         Employee alice = employeeRepository.addEmployee(new Employee("Alice", 24, "Female", 9000));
-        Employee bob = employeeRepository.addEmployee(new Employee("Bob", 28, "Male", 8000));
+        employeeRepository.addEmployee(new Employee("Bob", 28, "Male", 8000));
         //when
         mOckMvcClient.perform(MockMvcRequestBuilders.get("/employees/").param("gender", "Female"))
                 .andExpect(status().isOk())
@@ -135,7 +135,7 @@ public class EmployeeApiTests {
         //given
         Employee firstEmployee = employeeRepository.addEmployee(new Employee(1L, "Monkey D. Luffy", 19, "Male", 300000, 1L));
         Employee secondEmployee = employeeRepository.addEmployee(new Employee(2L, "Ronoroa Zoro", 21, "Male", 111100, 1L));
-        Employee thirdEmployee = employeeRepository.addEmployee(new Employee(3L, "Nami", 20, "Female", 36600, 1L));
+        employeeRepository.addEmployee(new Employee(3L, "Nami", 20, "Female", 36600, 1L));
         Long pageNumber = 1L;
         Long pageSize = 2L;
         //when
