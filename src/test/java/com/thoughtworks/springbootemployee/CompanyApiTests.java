@@ -1,6 +1,7 @@
 package com.thoughtworks.springbootemployee;
 
 import com.thoughtworks.springbootemployee.model.Company;
+import com.thoughtworks.springbootemployee.model.Employee;
 import com.thoughtworks.springbootemployee.repository.CompanyRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -37,5 +38,18 @@ public class CompanyApiTests {
                 .andExpect(jsonPath("$", hasSize(1)))
                 .andExpect(jsonPath("$[0].companyId").value(oocl.getCompanyId()))
                 .andExpect(jsonPath("$[0].companyName").value(oocl.getCompanyName()));
+    }
+
+    @Test
+    void should_return_the_company_when_perform_get_company_given_a_company_id() throws Exception {
+        //given
+        Company oocl = companyRepository.addCompany(new Company(1l,"OOCL"));
+        companyRepository.addCompany(new Company(2l, "COSCO"));
+        //when
+        mOckMvcClient.perform(MockMvcRequestBuilders.get("/companies/" + oocl.getCompanyId()))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.companyId").value(oocl.getCompanyId()))
+                .andExpect(jsonPath("$.companyName").value(oocl.getCompanyName()));
+        //then
     }
 }
