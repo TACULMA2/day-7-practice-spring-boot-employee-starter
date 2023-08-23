@@ -57,4 +57,23 @@ public class EmployeeApiTests {
                 .andExpect(jsonPath("$.salary").value(alice.getSalary()));
      //then
     }
+    
+    @Test
+    void should_should_return_404_not_found_when_perform_get_employee_given_a_not_existed_id() throws Exception {
+    //given
+     long notExistedEmployeeId=99L;
+     //when
+        mOckMvcClient.perform(MockMvcRequestBuilders.get("/employees/" + notExistedEmployeeId))
+                .andExpect(status().isNotFound());
+     //then
+    }
+
+//    @Test
+//    void should__when__given_() {
+//    //given
+//
+//     //when
+//
+//     //then
+//    }
 }
