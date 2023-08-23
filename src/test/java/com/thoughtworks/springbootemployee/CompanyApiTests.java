@@ -52,4 +52,13 @@ public class CompanyApiTests {
                 .andExpect(jsonPath("$.companyName").value(oocl.getCompanyName()));
         //then
     }
+
+    @Test
+    void should_should_return_404_not_found_when_perform_get_company_given_a_not_existed_company_id() throws Exception {
+        //given
+        long notExistedCompanyId = 99L;
+        //when
+        mOckMvcClient.perform(MockMvcRequestBuilders.get("/companies/" + notExistedCompanyId))
+                .andExpect(status().isNotFound());
+    }
 }
