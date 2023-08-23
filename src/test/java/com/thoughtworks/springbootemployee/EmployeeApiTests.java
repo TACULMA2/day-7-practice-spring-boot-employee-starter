@@ -125,4 +125,14 @@ public class EmployeeApiTests {
                 .andExpect(jsonPath("$.salary").value(newEmployee.getSalary()));
      //then
     }
+
+    @Test
+    void should_return_no_content_from_same_employee_number_when_perform_delete_given_a_employee_number() throws Exception{
+        //given
+        Employee deleteEmployee = employeeRepository.addEmployee(new Employee(1L,"Alice", 24, "Female", 9000));
+        //when
+        mOckMvcClient.perform(MockMvcRequestBuilders.delete("/employees/"+ deleteEmployee.getId()))
+                .andExpect(status().isNoContent());
+        //then
+    }
 }
