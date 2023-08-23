@@ -41,14 +41,14 @@ public class CompanyController {
     public List<Company> findCompanyByPage(@RequestParam Long pageNumber, Long pageSize) {
         return companyRepository.listByCompanyPage(pageNumber, pageSize);
     }
-
+//TODO I think you can just add something like @responsestatus(value = https.created reason = "")
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public String addCompany(@RequestBody Company company) {
         companyRepository.addCompany(company);
         return "Company added successfully.";
     }
-
+//TODO add a response status
     @DeleteMapping("/{companyId}")
     public String deleteCompany(@PathVariable Long companyId) {
         companyRepository.deleteCompany(companyId);

@@ -80,7 +80,7 @@ public class CompanyRepository {
                 .max()
                 .orElse(START_ID_MINUS_ONE) + ID_INCREMENT;
     }
-
+//TODO can also just use the remove, not sure
     public void deleteCompany(Long companyId) {
         Company companyToDelete = companies.stream()
                 .filter(company -> company.getCompanyId().equals(companyId))

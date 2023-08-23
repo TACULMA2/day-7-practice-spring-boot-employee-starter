@@ -32,7 +32,7 @@ public class EmployeeController {
     public List<Employee> findByGender(@RequestParam String gender) {
         return employeeRepository.findByGender(gender);
     }
-
+    //TODO I think you can just add something like @responsestatus(value = https.created reason = "")
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public String addEmployee(@RequestBody Employee employee) {
@@ -50,7 +50,7 @@ public class EmployeeController {
         employeeRepository.updateEmployee(id, updatedEmployee);
         return "Employee updated successfully.";
     }
-
+//TODO add a response status
     @DeleteMapping("/{id}")
     public String deleteEmployee(@PathVariable Long id) {
         employeeRepository.deleteEmployee(id);

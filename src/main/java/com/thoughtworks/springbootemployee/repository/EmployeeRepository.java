@@ -44,7 +44,7 @@ public class EmployeeRepository {
                 .filter(employee -> employee.getGender().equals(gender))
                 .collect(Collectors.toList());
     }
-
+//todo can just do inline
     public Employee addEmployee(Employee employee) {
         Long id = generateNextId();
         Employee toBeSavedEmployee = new Employee(id,
@@ -70,7 +70,7 @@ public class EmployeeRepository {
                 .limit(pageSize)
                 .collect(Collectors.toList());
     }
-
+//todo you can just use the setter and use it in the controller
     public void updateEmployee(Long id, Employee updatedEmployee) {
         Employee employeeToUpdate = employees.stream()
                 .filter(employee -> employee.getId().equals(id))
