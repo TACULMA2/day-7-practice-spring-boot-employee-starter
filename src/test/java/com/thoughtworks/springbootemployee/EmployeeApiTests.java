@@ -101,14 +101,14 @@ public class EmployeeApiTests {
                 .andExpect(jsonPath("$.gender").value(newEmployee.getGender()))
                 .andExpect(jsonPath("$.salary").value(newEmployee.getSalary()));
     }
-    
+
     @Test
     void should_return_updated_employee_when_perform_put_employees_given_a_employee_id() throws Exception {
-    //given
+        //given
         Employee newEmployee = employeeRepository.addEmployee(new Employee("Alice", 24, "Female", 9000));
         Employee updatedEmployee = new Employee("Alice", 22, "Female", 100000);
-     //when
-        mOckMvcClient.perform(MockMvcRequestBuilders.put("/employees/"+ newEmployee.getId())
+        //when
+        mOckMvcClient.perform(MockMvcRequestBuilders.put("/employees/" + newEmployee.getId())
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(new ObjectMapper().writeValueAsString(updatedEmployee)))
                 .andExpect(status().isOk())
@@ -120,25 +120,25 @@ public class EmployeeApiTests {
     }
 
     @Test
-    void should_return_no_content_from_same_employee_number_when_perform_delete_given_a_employee_number() throws Exception{
+    void should_return_no_content_from_same_employee_number_when_perform_delete_given_a_employee_number() throws Exception {
         //given
-        Employee deleteEmployee = employeeRepository.addEmployee(new Employee(1L,"Alice", 24, "Female", 9000));
+        Employee deleteEmployee = employeeRepository.addEmployee(new Employee(1L, "Alice", 24, "Female", 9000));
         //when
-        mOckMvcClient.perform(MockMvcRequestBuilders.delete("/employees/"+ deleteEmployee.getId()))
+        mOckMvcClient.perform(MockMvcRequestBuilders.delete("/employees/" + deleteEmployee.getId()))
                 .andExpect(status().isNoContent());
         //then
         Assertions.assertTrue(employeeRepository.listAll().isEmpty());
     }
-    
+
     @Test
     void should_return_list_of_employees_with_given_range_when_get_employees_given_pageNUmber_and_pageSize() throws Exception {
-    //given
+        //given
         Employee firstEmployee = employeeRepository.addEmployee(new Employee(1L, "Monkey D. Luffy", 19, "Male", 300000, 1L));
         Employee secondEmployee = employeeRepository.addEmployee(new Employee(2L, "Ronoroa Zoro", 21, "Male", 111100, 1L));
         Employee thirdEmployee = employeeRepository.addEmployee(new Employee(3L, "Nami", 20, "Female", 36600, 1L));
         Long pageNumber = 1L;
         Long pageSize = 2L;
-     //when
+        //when
         String queryString = String.format("/employees?pageNumber=%d&pageSize=%d", pageNumber, pageSize);
         mOckMvcClient.perform(MockMvcRequestBuilders.get(queryString))
                 .andExpect(status().isOk())
