@@ -1,21 +1,25 @@
 package com.thoughtworks.springbootemployee.controller;
 
 import com.thoughtworks.springbootemployee.model.Company;
+import com.thoughtworks.springbootemployee.model.Employee;
 import com.thoughtworks.springbootemployee.repository.CompanyRepository;
+import com.thoughtworks.springbootemployee.repository.EmployeeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Map;
 
 @RequestMapping(path = "/companies")
 @RestController
 public class CompanyController {
     private final CompanyRepository companyRepository;
+    private final EmployeeRepository employeeRepository;
+
     @Autowired
-    public CompanyController(CompanyRepository companyRepository) {
+    public CompanyController(CompanyRepository companyRepository, EmployeeRepository employeeRepository) {
         this.companyRepository = companyRepository;
+        this.employeeRepository = employeeRepository;
     }
 
     @GetMapping
@@ -34,8 +38,8 @@ public class CompanyController {
     }
 
     @GetMapping(path = "/{companyId}/employees")
-    public List<Map<String, Object>> listEmployeesByCompany(@PathVariable Long companyId) {
-        return companyRepository.getEmployeesByCompanyId(companyId);
+    public List<Employee> listEmployeesByCompany(@PathVariable Long companyId) {
+        return employeeRepository.getEmployeesByCompanyId(companyId);
     }
 
     @GetMapping(params = {"pageNumber", "pageSize"})

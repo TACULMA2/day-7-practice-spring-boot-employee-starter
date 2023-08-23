@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.thoughtworks.springbootemployee.model.Company;
 import com.thoughtworks.springbootemployee.model.Employee;
 import com.thoughtworks.springbootemployee.repository.CompanyRepository;
+import com.thoughtworks.springbootemployee.repository.EmployeeRepository;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -25,11 +26,14 @@ public class CompanyApiTests {
     @Autowired
     private CompanyRepository companyRepository;
     @Autowired
-    private MockMvc mOckMvcClient;
+    private EmployeeRepository employeeRepository;
+    @Autowired
+    private MockMvc mockMvcClient;
 
     @BeforeEach
     void cleanupCompanyData() {
         companyRepository.cleanAll();
+        employeeRepository.cleanALl();
     }
 
     @Test
@@ -37,7 +41,7 @@ public class CompanyApiTests {
         //given
         Company oocl = companyRepository.addCompany(new Company("OOCL"));
         //when
-        mOckMvcClient.perform(MockMvcRequestBuilders.get("/companies"))
+        mockMvcClient.perform(MockMvcRequestBuilders.get("/companies"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$", hasSize(1)))
                 .andExpect(jsonPath("$[0].companyId").value(oocl.getCompanyId()))
@@ -50,11 +54,10 @@ public class CompanyApiTests {
         Company oocl = companyRepository.addCompany(new Company(1l, "OOCL"));
         companyRepository.addCompany(new Company(2l, "COSCO"));
         //when
-        mOckMvcClient.perform(MockMvcRequestBuilders.get("/companies/" + oocl.getCompanyId()))
+        mockMvcClient.perform(MockMvcRequestBuilders.get("/companies/" + oocl.getCompanyId()))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.companyId").value(oocl.getCompanyId()))
                 .andExpect(jsonPath("$.companyName").value(oocl.getCompanyName()));
-        //then
     }
 
     @Test
@@ -62,7 +65,7 @@ public class CompanyApiTests {
         //given
         long notExistedCompanyId = 99L;
         //when
-        mOckMvcClient.perform(MockMvcRequestBuilders.get("/companies/" + notExistedCompanyId))
+        mockMvcClient.perform(MockMvcRequestBuilders.get("/companies/" + notExistedCompanyId))
                 .andExpect(status().isNotFound());
     }
 
@@ -72,7 +75,7 @@ public class CompanyApiTests {
         Company oocl = companyRepository.addCompany(new Company(1l, "OOCL"));
         Company cosco = companyRepository.addCompany(new Company(2l, "COSCO"));
         //when
-        mOckMvcClient.perform(MockMvcRequestBuilders.get("/companies/").param("companyName", "OOCL"))
+        mockMvcClient.perform(MockMvcRequestBuilders.get("/companies/").param("companyName", "OOCL"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$", hasSize(1)))
                 .andExpect(jsonPath("$[0].companyId").value(oocl.getCompanyId()))
@@ -84,7 +87,7 @@ public class CompanyApiTests {
         //given
         Company newCompany = new Company("COSCO");
         //when
-        mOckMvcClient.perform(MockMvcRequestBuilders.post("/companies/")
+        mockMvcClient.perform(MockMvcRequestBuilders.post("/companies/")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(new ObjectMapper().writeValueAsString(newCompany)))
                 .andExpect(status().isCreated())
@@ -98,7 +101,7 @@ public class CompanyApiTests {
         Company newCompany = companyRepository.addCompany(new Company("COSCO"));
         Company updatedCompany = new Company("OOCl");
         //when
-        mOckMvcClient.perform(MockMvcRequestBuilders.put("/companies/"+ newCompany.getCompanyId())
+        mockMvcClient.perform(MockMvcRequestBuilders.put("/companies/" + newCompany.getCompanyId())
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(new ObjectMapper().writeValueAsString(updatedCompany)))
                 .andExpect(status().isOk())
@@ -107,11 +110,11 @@ public class CompanyApiTests {
     }
 
     @Test
-    void should_return_no_content_from_same_company_id_when_perform_delete_given_a_company_id() throws Exception{
+    void should_return_no_content_from_same_company_id_when_perform_delete_given_a_company_id() throws Exception {
         //given
-        Company deleteCompany = companyRepository.addCompany(new Company(1L,"OOCL"));
+        Company deleteCompany = companyRepository.addCompany(new Company(1L, "OOCL"));
         //when
-        mOckMvcClient.perform(MockMvcRequestBuilders.delete("/companies/"+ deleteCompany.getCompanyId()))
+        mockMvcClient.perform(MockMvcRequestBuilders.delete("/companies/" + deleteCompany.getCompanyId()))
                 .andExpect(status().isNoContent());
         //then
         Assertions.assertTrue(companyRepository.listAllCompanies().isEmpty());
@@ -129,7 +132,7 @@ public class CompanyApiTests {
         Long pageSize = 4L;
         //when
         String queryString = String.format("/companies?pageNumber=%d&pageSize=%d", pageNumber, pageSize);
-        mOckMvcClient.perform(MockMvcRequestBuilders.get(queryString))
+        mockMvcClient.perform(MockMvcRequestBuilders.get(queryString))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$", hasSize(4)))
                 .andExpect(jsonPath("$[0].companyId").value(oocl.getCompanyId()))
@@ -140,5 +143,19 @@ public class CompanyApiTests {
                 .andExpect(jsonPath("$[2].companyName").value(tw.getCompanyName()))
                 .andExpect(jsonPath("$[3].companyId").value(scape.getCompanyId()))
                 .andExpect(jsonPath("$[3].companyName").value(scape.getCompanyName()));
+    }
+
+    @Test
+    void should_return_employees_when_performs_get_given_company_id() throws Exception {
+        Company oocl = companyRepository.addCompany(new Company(1L, "OOCL"));
+        Employee alice = employeeRepository.addEmployee(new Employee(1L, "Alice", 24, "Female", 9000, oocl.getCompanyId()));
+        String queryString = String.format("/companies/%d/employees", oocl.getCompanyId());
+        mockMvcClient.perform(MockMvcRequestBuilders.get(queryString))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("[0].id").value(alice.getId()))  // Access the first element
+                .andExpect(jsonPath("[0].name").value(alice.getName()))
+                .andExpect(jsonPath("[0].age").value(alice.getAge()))
+                .andExpect(jsonPath("[0].gender").value(alice.getGender()))
+                .andExpect(jsonPath("[0].salary").value(alice.getSalary()));
     }
 }

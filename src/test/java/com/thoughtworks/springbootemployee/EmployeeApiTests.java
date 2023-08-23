@@ -44,7 +44,6 @@ public class EmployeeApiTests {
                 .andExpect(jsonPath("$[0].age").value(alice.getAge()))
                 .andExpect(jsonPath("$[0].gender").value(alice.getGender()))
                 .andExpect(jsonPath("[0].salary").value(alice.getSalary())); //JSON format data //$ means it will the first file
-        //then
     }
 
     @Test
@@ -60,7 +59,6 @@ public class EmployeeApiTests {
                 .andExpect(jsonPath("$.age").value(alice.getAge()))
                 .andExpect(jsonPath("$.gender").value(alice.getGender()))
                 .andExpect(jsonPath("$.salary").value(alice.getSalary()));
-        //then
     }
 
     @Test
@@ -70,7 +68,6 @@ public class EmployeeApiTests {
         //when
         mOckMvcClient.perform(MockMvcRequestBuilders.get("/employees/" + notExistedEmployeeId))
                 .andExpect(status().isNotFound());
-        //then
     }
 
     @Test
@@ -87,7 +84,6 @@ public class EmployeeApiTests {
                 .andExpect(jsonPath("$[0].age").value(alice.getAge()))
                 .andExpect(jsonPath("$[0].gender").value(alice.getGender()))
                 .andExpect(jsonPath("[0].salary").value(alice.getSalary()));
-        //then
     }
 
     @Test
@@ -104,7 +100,6 @@ public class EmployeeApiTests {
                 .andExpect(jsonPath("$.age").value(newEmployee.getAge()))
                 .andExpect(jsonPath("$.gender").value(newEmployee.getGender()))
                 .andExpect(jsonPath("$.salary").value(newEmployee.getSalary()));
-        //then
     }
     
     @Test
@@ -122,7 +117,6 @@ public class EmployeeApiTests {
                 .andExpect(jsonPath("$.age").value(updatedEmployee.getAge()))
                 .andExpect(jsonPath("$.gender").value(updatedEmployee.getGender()))
                 .andExpect(jsonPath("$.salary").value(newEmployee.getSalary()));
-     //then
     }
 
     @Test
@@ -159,6 +153,5 @@ public class EmployeeApiTests {
                 .andExpect(jsonPath("$[1].age").value(secondEmployee.getAge()))
                 .andExpect(jsonPath("$[1].gender").value(secondEmployee.getGender()))
                 .andExpect(jsonPath("$[1].salary").value(secondEmployee.getSalary()));
-     //then
     }
 }
