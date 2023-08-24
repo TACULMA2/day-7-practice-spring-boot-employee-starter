@@ -115,8 +115,8 @@ public class EmployeeApiTests {
                 .andExpect(jsonPath("$.id").value(newEmployee.getId()))
                 .andExpect(jsonPath("$.name").value(newEmployee.getName()))
                 .andExpect(jsonPath("$.age").value(updatedEmployee.getAge()))
-                .andExpect(jsonPath("$.gender").value(updatedEmployee.getGender()))
-                .andExpect(jsonPath("$.salary").value(newEmployee.getSalary()));
+                .andExpect(jsonPath("$.gender").value(newEmployee.getGender()))
+                .andExpect(jsonPath("$.salary").value(updatedEmployee.getSalary()));
     }
 
     @Test
